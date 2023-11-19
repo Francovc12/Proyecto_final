@@ -1,1 +1,1 @@
-Proyecto informatico
+Proyecto informatico.
