@@ -19,9 +19,7 @@ function clientes(){
     )
     .then(
         resp=>{
-            //console.log(resp)
-            //console.log("hola mundo")
-            document.getElementById('botonesrec').innerHTML='<button onclick="agregarcliente()">Agregar cliente</button>'
+            document.getElementById('botonesrec').innerHTML='<button type="button" class="fs-6 mt-3 p-0 btn btn-sm btn-link fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
             document.getElementById("recurso").innerHTML = "<table id=tablacliente> </table>"
             var clientes = "<thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Dni</th><th>Email</th><th>accion</th></tr></thead>"
             if (resp.length == 0){
@@ -34,7 +32,6 @@ function clientes(){
                 let surname = resp[i].apellido
                 let dni = resp[i].dni
                 let email = resp[i].email
-                //console.log(email)
                 let cliente=`<tr><td>${id}</td><td>${name}</td><td>${surname}</td><td>${dni}</td><td>${email}</td><td><button>Eliminar</button><button>Modificar</button></td></tr>`
 
 
@@ -45,15 +42,39 @@ function clientes(){
     )
     .catch(error => console.error(error));
 }
-function agregarcliente(){
-    document.getElementById("form").innerHTML='<form><input type="text" placeholder="Ingrese nombre"></input><button type="submit">Enviar</button></form><button id="cerrarModal">Cerrar</button>'
-    document.getElementById('form').showModal()
-    /*const requestOptions={
-        method:'POST',
+function registrar_cliente(){
+    const nombre = document.getElementById('formRegistro-nombre').value;
+    const apellido = document.getElementById('formRegistro-apellido').value;
+    const dni = document.getElementById('formRegistro-dni').value;
+    const email = document.getElementById('formRegistro-email').value;
+    const body ={"nombre":nombre, "apellido": apellido, "dni":dni, "email": email}
+    const requestOptions={
+        method: 'POST',
         headers:{
             'token-acceso' : token,
-            'id-usuario' : iduser
-        }
+            'id-usuario' : iduser,
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify(body)
     }
-    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/clientes`, requestOptions)*/
+    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/clientes`, requestOptions)
+    .then(
+        res =>{
+            if (res.status === 200 || res.status === 400) {
+              return res.json();
+            } else {
+              throw new Error("Something went wrong on api server!");
+            }
+          }
+    )
+    .then(
+        resp=>{
+            console.log(nombre,apellido,dni,email)
+            document.getElementById("mensaje-registro").innerHTML=`<p>${resp}</p>`
+        }
+    )
+    .catch((error) => {
+        console.error(error)
+        document.getElementById("mensaje-registro").innerHTML=`<p>${error}</p>`;
+      });
 }
