@@ -7,8 +7,9 @@ from utils import requiere_token, recurso_usuario
 @app.route('/usuarios/<int:id_usuario>/clientes', methods = ['POST'])
 @recurso_usuario
 @requiere_token
-def crear_cliente(id_usuario):
+def crear_Cliente(id_usuario):
     datos = request.get_json()
+    datos["dni"]=int(datos["dni"])
     datos["id_usuario"] = id_usuario
     datos["activo"]=True
 

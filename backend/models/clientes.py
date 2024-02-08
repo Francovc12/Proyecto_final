@@ -32,6 +32,7 @@ class Cliente():
         }
     # Metodo para verificar los datos ingresados
     def verificacion_datos_ingresados(datos):
+        print(datos)
         if datos == None or type(datos) != dict:
             return False
         for key in Cliente.schema:

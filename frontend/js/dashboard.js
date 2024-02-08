@@ -60,7 +60,7 @@ function registrar_cliente(){
     fetch(`http://127.0.0.1:5000/usuarios/${iduser}/clientes`, requestOptions)
     .then(
         res =>{
-            if (res.status === 200 || res.status === 400) {
+            if (res.status === 201 || res.status === 400) {
               return res.json();
             } else {
               throw new Error("Something went wrong on api server!");
@@ -69,6 +69,7 @@ function registrar_cliente(){
     )
     .then(
         resp=>{
+            resp=JSON.stringify(resp)
             console.log(nombre,apellido,dni,email)
             document.getElementById("mensaje-registro").innerHTML=`<p>${resp}</p>`
         }
