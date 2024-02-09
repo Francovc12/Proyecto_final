@@ -44,6 +44,7 @@ function login_usuario(){
             
             }
         )
+        .catch((error) => { console.log("Promesa rechazada por" , error)})
     }
 
 }
