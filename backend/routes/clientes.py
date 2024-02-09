@@ -40,6 +40,7 @@ def clientes_por_id(id_usuario):
 @requiere_token
 def modificar_cliente(id_usuario,id_cliente):
     datos = request.get_json()
+    datos["dni"]=int(datos["dni"])
     datos["id_usuario"] = id_usuario
     datos["activo"]=True
     try:
