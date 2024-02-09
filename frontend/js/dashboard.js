@@ -130,10 +130,10 @@ function guardar(id){
     //datos a editar y conseguir esos datos
     let datos = row.children;
     const cliente = {
-        nombre: datos[1].textContent,
-        apellido:datos[2].textContent,
-        dni:datos[3].textContent,
-        email:datos[4].textContent,
+        "nombre": datos[1].textContent,
+        "apellido":datos[2].textContent,
+        "dni":datos[3].textContent,
+        "email":datos[4].textContent,
     }
     console.log(cliente);
     const requestOptions={

@@ -15,7 +15,7 @@ def crear_Cliente(id_usuario):
 
     try:
         nuevo_cliente = Cliente.crear_cliente(datos)
-        return jsonify(nuevo_cliente),201
+        return jsonify({"message": "Se creo cliente"}),201
     except Exception as e:
         return jsonify({"message": e.args[0]}),400
 

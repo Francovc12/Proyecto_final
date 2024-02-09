@@ -100,7 +100,7 @@ class Cliente():
             cur.execute('UPDATE cliente SET nombre = %s, apellido = %s, dni = %s, email = %s WHERE id_usuario= %s AND id_cliente= %s',
                         (datos["nombre"],datos["apellido"],datos["dni"],datos["email"],id_usuario, id_cliente))
             mysql.connection.commit()
-            if cur.rowcount > 0 :
+            if cur.rowcount >= 0 :
                 return Cliente.clientes_por_id(id_cliente)
             raise DBError("Error al modificar cliente")
         raise TypeError("Error en los datos ingresados")
