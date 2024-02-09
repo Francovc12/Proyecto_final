@@ -17,8 +17,9 @@ class Cliente():
         self._nombre = row[2]
         self._apellido = row[3]
         self._dni = row[4]
-        self._activo = row[5]
-        self._email = row[6]
+        self._email = row[5]
+        self._activo = row[6]
+
 
     def to_json(self):
         return {
@@ -27,8 +28,8 @@ class Cliente():
             "nombre": self._nombre,
             "apellido" : self._apellido,
             "dni" : self._dni,
-            "activo": self._activo,
-            "email": self._email
+            "email": self._email,
+            "activo": self._activo
         }
     # Metodo para verificar los datos ingresados
     def verificacion_datos_ingresados(datos):

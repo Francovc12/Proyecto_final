@@ -22,19 +22,19 @@ CREATE TABLE IF NOT EXISTS Cliente(
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     dni INT(8) NOT NULL,
-    activo BOOLEAN NOT NULL,
     email VARCHAR(255) NOT NULL,
+    activo BOOLEAN NOT NULL,
     PRIMARY KEY (id_cliente),
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 INSERT INTO Cliente VALUES(
-    1,1,'Dario','Carrizo',25567876, TRUE,'dariorizo@gmail.com'),
-    (2,1,'Dalma','Mamani',36674897, TRUE,'dalmam@gmail.com'),
-    (3,1,'Walter','Bueno',29743333, TRUE,'buenowaly@gmail.com'),
-    (4,2,'Mario','Guanca',23987102, TRUE,'marito99@gmail.com'),
-    (5,2,'Sebastian','Condori',26709332, TRUE,'seba@gmail.com'),
-    (6,2,'Stefania','Ghilardi',35789209, TRUE,'stefy@gmail.com');
+    1,1,'Dario','Carrizo',25567876,'dariorizo@gmail.com',TRUE),
+    (2,1,'Dalma','Mamani',36674897,'dalmam@gmail.com',TRUE),
+    (3,1,'Walter','Bueno',29743333,'buenowaly@gmail.com',TRUE),
+    (4,2,'Mario','Guanca',23987102,'marito99@gmail.com',TRUE),
+    (5,2,'Sebastian','Condori',26709332,'seba@gmail.com',TRUE),
+    (6,2,'Stefania','Ghilardi',35789209,'stefy@gmail.com',TRUE);
 
 CREATE TABLE IF NOT EXISTS Productos(
     id_producto INT(10) NOT NULL AUTO_INCREMENT,

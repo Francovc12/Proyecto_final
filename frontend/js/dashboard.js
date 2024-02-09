@@ -1,3 +1,9 @@
+const hamBurger = document.querySelector(".toggle-btn");
+
+hamBurger.addEventListener("click", function () {
+  document.querySelector("#sidebar").classList.toggle("expand");
+});
+
 const iduser = localStorage.getItem('id')
 const token = localStorage.getItem("token")
 const name = localStorage.getItem('username')
