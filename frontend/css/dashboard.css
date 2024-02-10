@@ -140,12 +140,18 @@ a.sidebar-link:hover {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 }
+#botonesrec{
+    margin: 0px 15%;
+    padding-bottom: 30px;
+}
 
-#tablacliente{
+#tablacliente,th,td{
     table-layout: fixed;
-    width: 650px;
+    width: 80%;
+    margin: 0px auto;
     border-collapse: collapse;
-    border: 3px solid black;
+    /*border: 3px solid #0e2238;*/
+    padding: 3px 10px;
   }
   
   thead th:nth-child(1) {
@@ -175,8 +181,9 @@ a.sidebar-link:hover {
     padding: 5px;
   }
 .editing{
-    background-color: aqua;
-    transform: scale(1.2);
+    color: #145294;
+    transform: scale(0.9);
+    border: 1px inset #145294;
 }
 footer{
     clear: both;

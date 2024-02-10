@@ -31,8 +31,9 @@ function clientes(){
     )
     .then(
         resp=>{
-            document.getElementById('botonesrec').innerHTML='<button type="button" class="fs-6 mt-3 p-0 btn btn-sm btn-link fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
-            document.getElementById("recurso").innerHTML = "<table id=tablacliente> </table>"
+            //class="fs-6 mt-3 p-0 btn btn-sm btn-link fw-bold text-decoration-none"
+            document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
+            document.getElementById("recurso").innerHTML = '<table id=tablacliente class="table table-hover table-sm"> </table>'
             var clientes = "<thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Dni</th><th>Email</th><th>accion</th></tr></thead>"
             if (resp.length == 0){
                 clientes = clientes.concat('<tr><td>No posee registros de clientes</td></tr>')
@@ -50,8 +51,8 @@ function clientes(){
                 <td>${surname}</td>
                 <td>${dni}</td>
                 <td>${email}</td>
-                <td><button onclick=editar_cliente(${id})>Modificar</button>
-                <button onclick=eliminar_cliente(${id})>Eliminar</button></td></tr>`
+                <td><button onclick=editar_cliente(${id}) class="btn btn-outline-secondary">Modificar</button>
+                <button onclick=eliminar_cliente(${id}) class="btn btn-outline-danger">Eliminar</button></td></tr>`
 
                 clientes = clientes.concat(cliente)
             }
@@ -110,8 +111,8 @@ function editar_cliente(id){
     }
 
     row.children[5].innerHTML=`<td>
-        <button onclick="guardar(${id})"> Guardar</button>
-        <button onclick="eliminar(${id})" disabled> Eliminar</button>  
+        <button onclick="guardar(${id})" class="btn btn-outline-secondary"> Guardar</button>
+        <button onclick="eliminar(${id})" disabled class="btn btn-outline-danger"> Eliminar</button>  
         </td> `;
 }
 
@@ -124,8 +125,8 @@ function guardar(id){
     }
     //modificar los botones al presionar guardar
     row.children[5].innerHTML=`<td>
-        <button onclick="editar_cliente(${id})"> Modificar </button>
-        <button onclick="eliminar_cliente(${id})"> Eliminar</button>  
+        <button onclick="editar_cliente(${id})" class="btn btn-outline-secondary"> Modificar </button>
+        <button onclick="eliminar_cliente(${id})" class="btn btn-outline-danger"> Eliminar</button>  
         </td> `;
     //datos a editar y conseguir esos datos
     let datos = row.children;
