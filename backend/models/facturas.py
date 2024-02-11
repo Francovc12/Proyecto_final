@@ -19,8 +19,8 @@ class Facturas():
     def to_json(self):
         return {
             "id_factura": self._id_factura,
-            "id_usuario": self._id_usuario,
             "id_cliente": self._id_cliente,
+            "id_usuario": self._id_usuario,
             "hora_fecha": self._hora_fecha,
             "cant_productos": self._cant_productos,
             "descuento" : self._descuento,
