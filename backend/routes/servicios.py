@@ -4,7 +4,7 @@ from flask import jsonify, request
 from utils import requiere_token,recurso_usuario
 
 #ruta para obtener todos los servicios de un usuario
-@app.route('/usuario/<int:id_usuario>/servicios', methods = ['GET'])
+@app.route('/usuarios/<int:id_usuario>/servicios', methods = ['GET'])
 @requiere_token
 @recurso_usuario
 def get_servicio(id_usuario):
@@ -16,7 +16,7 @@ def get_servicio(id_usuario):
 
 #ruta para obtener un  servicio por id_servicio
 #nota se puede ver servicios de otros usuarios
-@app.route('/usuario/<int:id_usuario>/servicios/<int:id_servicio>', methods=['GET'])
+@app.route('/usuarios/<int:id_usuario>/servicios/<int:id_servicio>', methods=['GET'])
 @requiere_token
 @recurso_usuario
 def obtener_servicio_por_id(id_usuario, id_servicio):
@@ -27,7 +27,7 @@ def obtener_servicio_por_id(id_usuario, id_servicio):
         return  jsonify({"message": e.args[0]}), 400  
 
 #misma ruta pero implementando el metodo post para agregar un nuevo servicio
-@app.route('/usuario/<int:id_usuario>/servicios', methods = ['POST'])
+@app.route('/usuarios/<int:id_usuario>/servicios', methods = ['POST'])
 @requiere_token
 @recurso_usuario
 def crear_servicio(id_usuario):
@@ -41,7 +41,7 @@ def crear_servicio(id_usuario):
         return jsonify({"message": e.args[0]}), 400
     
 #ruta para modificar los servicios con el metodo put
-@app.route('/usuario/<int:id_usuario>/servicios/<int:id_serv>', methods = ['PUT'])
+@app.route('/usuarios/<int:id_usuario>/servicios/<int:id_serv>', methods = ['PUT'])
 @requiere_token
 @recurso_usuario
 def modificar_servicio(id_usuario,id_serv):
@@ -54,7 +54,7 @@ def modificar_servicio(id_usuario,id_serv):
         return jsonify({"message": e.args[0]}),400
     
 #ruta para eliminar un servicio
-@app.route('/usuario/<int:id_usuario>/servicios/<int:id_servicio>', methods = ['DELETE'])
+@app.route('/usuarios/<int:id_usuario>/servicios/<int:id_servicio>', methods = ['DELETE'])
 @requiere_token
 @recurso_usuario
 def eliminar_usuario(id_usuario,id_servicio):

@@ -4,7 +4,7 @@ from flask import jsonify, request
 from utils import requiere_token,recurso_usuario
 
 #ruta para obtener todos los productos de un usuario
-@app.route('/usuario/<int:id_usuario>/productos', methods = ['GET'])
+@app.route('/usuarios/<int:id_usuario>/productos', methods = ['GET'])
 @requiere_token
 @recurso_usuario
 def get_productos(id_usuario):
@@ -15,7 +15,7 @@ def get_productos(id_usuario):
         return jsonify({"message":e.args[0]}), 400 
 
 #ruta para obtener un  producto por id_producto
-@app.route('/usuario/<int:id_usuario>/productos/<int:id_producto>', methods=['GET'])
+@app.route('/usuarios/<int:id_usuario>/productos/<int:id_producto>', methods=['GET'])
 @requiere_token
 @recurso_usuario
 def obtener_producto_por_id(id_usuario, id_producto):
@@ -26,7 +26,7 @@ def obtener_producto_por_id(id_usuario, id_producto):
         return  jsonify({"message": e.args[0]}), 400  
 
 #misma ruta pero implementando el metodo post para agregar un nuevo producto
-@app.route('/usuario/<int:id_usuario>/productos', methods = ['POST'])
+@app.route('/usuarios/<int:id_usuario>/productos', methods = ['POST'])
 @requiere_token
 @recurso_usuario
 def crear_producto(id_usuario):
@@ -40,7 +40,7 @@ def crear_producto(id_usuario):
         return jsonify({"message": e.args[0]}), 400
     
 #ruta para modificar los productos con el metodo put
-@app.route('/usuario/<int:id_usuario>/productos/<int:id_prod>', methods = ['PUT'])
+@app.route('/usuarios/<int:id_usuario>/productos/<int:id_prod>', methods = ['PUT'])
 @requiere_token
 @recurso_usuario
 def modificar_producto(id_usuario,id_prod):
@@ -53,7 +53,7 @@ def modificar_producto(id_usuario,id_prod):
         return jsonify({"message": e.args[0]}),400
     
 #ruta para eliminar un producto
-@app.route('/usuario/<int:id_usuario>/productos/<int:id_producto>', methods = ['DELETE'])
+@app.route('/usuarios/<int:id_usuario>/productos/<int:id_producto>', methods = ['DELETE'])
 @requiere_token
 @recurso_usuario
 def eliminar_producto(id_usuario,id_producto):
