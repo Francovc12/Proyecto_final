@@ -145,80 +145,40 @@ a.sidebar-link:hover {
     padding-bottom: 30px;
 }
 
-#tablacliente,th,td{
-    table-layout: fixed;
+#tablacliente{
+    table-layout: auto;
     width: 80%;
+    padding: auto;
     margin: 0px auto;
     border-collapse: collapse;
-    /*border: 3px solid #0e2238;*/
-    padding: 3px 10px;
-  }
-  
-  thead th:nth-child(1) {
-    width: 5%;
-  }
-  
-  thead th:nth-child(2) {
-    width: 15%;
-  }
-  
-  thead th:nth-child(3) {
-    width: 15%;
-  }
-  
-  thead th:nth-child(4) {
-    width: 15%;
-  }
-  thead th:nth-child(5) {
-    width: 25%;
-  }
-  thead th:nth-child(6) {
-    width: 25%;
-  }
-  
-  th,
-  td {
-    padding: 5px;
   }
 .editing{
     color: #145294;
     transform: scale(0.9);
     border: 1px inset #145294;
 }
-#tablafactura,th,td{
+#tablafactura{
     table-layout: auto;
     width: 80%;
+    padding: auto;
     margin: 0px auto;
     border-collapse: collapse;
-    /*border: 3px solid #0e2238;*/
-    padding: 3px 10px;
+
   }
-  /*
-  thead th:nth-child(1) {
-    width: 5%;
+#tablaproducto{
+    table-layout: auto;
+    width: 80%;
+    padding: auto;
+    margin: 0px auto;
+    border-collapse: collapse;
   }
-  
-  thead th:nth-child(2) {
-    width: 5%;
+#tablaservicio{
+    table-layout: auto;
+    width: 80%;
+    padding: auto;
+    margin: 0px auto;
+    border-collapse: collapse;
   }
-  
-  thead th:nth-child(3) {
-    width: 35%;
-  }
-  
-  thead th:nth-child(4) {
-    width: 10%;
-  }
-  thead th:nth-child(5) {
-    width: 10%;
-  }
-  thead th:nth-child(6) {
-    width: 10%;
-  }
-  thead th:nth-child(6) {
-    width: 25%;
-  }
-*/
 
 footer{
     clear: both;
