@@ -65,7 +65,7 @@ def eliminar_producto(id_usuario,id_producto):
     
 
 #ruta para controlar stock de productos
-@app.route('/usuario/<int:id_usuario>/productos/stock', methods=['GET'])
+@app.route('/usuarios/<int:id_usuario>/productos/stock', methods=['GET'])
 @requiere_token
 @recurso_usuario
 def control_stock(id_usuario):

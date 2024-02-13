@@ -3,7 +3,7 @@ from flask import request, jsonify
 from models.ventas_productos import VentasProducto
 from utils import requiere_token, recurso_usuario
 
-@app.route('/usuario/<int:id_usuario>/factura/ventaproducto', methods=['POST'])
+@app.route('/usuarios/<int:id_usuario>/factura/ventaproducto', methods=['POST'])
 @requiere_token
 @recurso_usuario
 def crear_venta_producto(id_usuario):
@@ -14,7 +14,7 @@ def crear_venta_producto(id_usuario):
     except Exception as e:
         return jsonify({"message":e.args[0]}),400
     
-@app.route('/usuario/<int:id_usuario>/factura/Rankingventaproducto', methods=['GET'])
+@app.route('/usuarios/<int:id_usuario>/factura/Rankingventaproducto', methods=['GET'])
 @requiere_token
 @recurso_usuario
 def Ranking_ventasProductos(id_usuario):

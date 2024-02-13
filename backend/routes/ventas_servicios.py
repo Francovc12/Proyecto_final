@@ -3,7 +3,7 @@ from flask import request, jsonify
 from models.ventas_servicios import VentasServicios
 from utils import requiere_token, recurso_usuario
 
-@app.route('/usuario/<int:id_usuario>/factura/ventaservicio', methods=['POST'])
+@app.route('/usuarios/<int:id_usuario>/factura/ventaservicio', methods=['POST'])
 @requiere_token
 @recurso_usuario
 def crear_ventas_servicio(id_usuario):
@@ -16,7 +16,7 @@ def crear_ventas_servicio(id_usuario):
         return jsonify({"message":e.args[0]}),400
     
 
-@app.route('/usuario/<int:id_usuario>/factura/rankingventaservicio', methods=['GET'])
+@app.route('/usuarios/<int:id_usuario>/factura/Rankingventaservicio', methods=['GET'])
 @requiere_token
 @recurso_usuario
 def ranking_ventas_servicios(id_usuario):

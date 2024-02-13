@@ -80,6 +80,7 @@ class VentasProducto():
             for row in datos:
                 datos = Producto.producto_por_id(row[0])
                 ranking_productos={
+                    "marca":datos["marca"],
                     "producto": datos['nombre_producto'],
                     "cantidad" : row[1],
                 }

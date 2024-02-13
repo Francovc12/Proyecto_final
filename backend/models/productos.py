@@ -119,6 +119,7 @@ class Producto():
             for row in datos:
                 datos = Producto.producto_por_id(row[0])
                 info_productos={
+                    "marca": datos["marca"],
                     "producto": datos['nombre_producto'],
                     "stock" : row[1],
                 }
