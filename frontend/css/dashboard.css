@@ -144,7 +144,10 @@ a.sidebar-link:hover {
     margin: 0px 15%;
     padding-bottom: 30px;
 }
-
+#subtitulo{
+    margin: 5px 15%;
+    padding-bottom: 30px;
+}
 #tablacliente{
     table-layout: auto;
     width: 80%;
@@ -173,6 +176,13 @@ a.sidebar-link:hover {
     border-collapse: collapse;
   }
 #tablaservicio{
+    table-layout: auto;
+    width: 80%;
+    padding: auto;
+    margin: 0px auto;
+    border-collapse: collapse;
+  }
+#tablahistorial{
     table-layout: auto;
     width: 80%;
     padding: auto;

@@ -18,7 +18,7 @@ function clientes(){
     .then(
         resp=>{
             document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
-            document.getElementById("recurso").innerHTML = '<table id=tablacliente class="table table-hover table-sm"> </table>'
+            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Clintes</h2><table id=tablacliente class="table table-hover table-sm"> </table>'
             var clientes = "<thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Dni</th><th>Email</th><th>accion</th></tr></thead>"
             if (resp.length == 0){
                 clientes = clientes.concat(sinRegistro)

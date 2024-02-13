@@ -17,7 +17,7 @@ function facturas(){
     .then(
         resp=>{
             document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistrofactura">Crear Factura</button>'
-            document.getElementById("recurso").innerHTML = '<table id="tablafactura" class="table table-hover table-sm"> </table>'
+            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Facturas</h2><table id="tablafactura" class="table table-hover table-sm"> </table>'
             var lista_facturas = "<thead><tr><th>ID</th><th>id cliente</th><th>fecha y hora</th><th>Productos</th><th>Descuento</th><th>total</th><th>acciones</th></tr></thead>"
             if (resp.length === 0){
                 lista_facturas = lista_facturas.concat(sinRegistro)

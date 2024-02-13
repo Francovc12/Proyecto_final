@@ -18,7 +18,7 @@ function productos(){
     .then(
         resp=>{
             document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroproducto">Registrar producto</button>'
-            document.getElementById("recurso").innerHTML = '<table id="tablaproducto" class="table table-hover table-sm"> </table>'
+            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Productos</h2><table id="tablaproducto" class="table table-hover table-sm"> </table>'
             var lista_producto = "<thead><tr><th>ID</th><th>categoria</th><th>marca</th><th>nombre</th><th>descripcion</th><th>precio</th><th>stock</th><th>acciones</th></tr></thead>"
             if (resp.length === 0){
                 lista_producto = lista_producto.concat(sinRegistro)

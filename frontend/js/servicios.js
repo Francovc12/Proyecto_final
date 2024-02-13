@@ -18,7 +18,7 @@ function servicios(){
     .then(
         resp=>{
             document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroservicio">Registrar servicio</button>'
-            document.getElementById("recurso").innerHTML = '<table id="tablaservicio" class="table table-hover table-sm"> </table>'
+            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Servicios</h2><table id="tablaservicio" class="table table-hover table-sm"> </table>'
             var lista_servicio = "<thead><tr><th>ID</th><th>servicio</th><th>descripcion</th><th>precio</th><th>acciones</th></tr></thead>"
             if (resp.length === 0){
                 lista_servicio = lista_servicio.concat(sinRegistro)
