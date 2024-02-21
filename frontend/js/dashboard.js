@@ -10,7 +10,8 @@ const name = localStorage.getItem('username')
 
 window.onload = function(){
     document.getElementById("bienvenida").innerHTML = 'Bienvenido ' + name;
-    ocultarFormusuario()
+    localStorage.removeItem('listaservicio');
+    localStorage.removeItem('listaproducto');
 }
 function historial_ventas(){
   ocultarFormusuario()
@@ -60,6 +61,8 @@ function stock(){
   //instancio un objeto grid para hacer una tabla
   var stock = new gridjs.Grid({
     //buqueda activa y con paginas de limite de 2 productos
+    resizable: true,
+    sort: true,
     search: true,
     pagination:{
       limit: 2,
@@ -88,9 +91,12 @@ function stock(){
 }
 
 function ventas_productos(){
+  ocultarFormusuario()
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
   var productos = new gridjs.Grid({
+    resizable: true,
+    sort: true,
     search: true,
     pagination:{
       limit: 2,
@@ -118,6 +124,7 @@ function ventas_productos(){
 }
 
 function ventas_servicios(){
+  ocultarFormusuario()
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
 
@@ -155,6 +162,7 @@ function ventas_servicios(){
 }
 
 function ventas_clientes(){
+  ocultarFormusuario()
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
 
@@ -192,8 +200,19 @@ function ventas_clientes(){
 }
 
 function cargaUsuario(){
+  ocultarFormusuario()
+  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("recurso").innerHTML=""
   document.getElementById("form_usuario").removeAttribute("hidden")
 }
-function ocultarFormusuario(id){
-  document.getElementById(id).setAttribute("hidden","")
+function ocultarFormusuario(){
+  document.getElementById("form_usuario").setAttribute("hidden","")
+  document.getElementById("dashboard").setAttribute("hidden","")
+}
+
+function home(){
+  ocultarFormusuario()
+  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("recurso").innerHTML=""
+  document.getElementById("dashboard").removeAttribute("hidden")
 }

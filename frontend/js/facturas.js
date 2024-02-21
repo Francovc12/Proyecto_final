@@ -1,5 +1,5 @@
 function facturas(){
-    ocultarFormusuario("form-usuario")
+    ocultarFormusuario()
     const requestOptions={
         method:'GET',
         headers:{
