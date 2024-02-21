@@ -50,4 +50,57 @@ function login_usuario(){
 }
 
 function registrar_usuario(){
+    var nombreusuario = document.getElementById("formRegistro-nombreUsuario").value;
+    var contrasenia = document.getElementById("formRegistro-contrasenia").value;
+    var nombre = document.getElementById("formRegistro-nombre").value; 
+    var apellido = document.getElementById("formRegistro-apellido").value;
+    var telefono = document.getElementById("formRegistro-telefono").value;
+    var email = document.getElementById("formRegistro-email").value;
+    var body = {  "nombre_usuario": nombreusuario,
+    "contrasenia": contrasenia,
+    "nombre": nombre,
+    "apellido": apellido,
+    "telefono": telefono,
+    "email": email}
+    const requestOptions={
+        method:'POST',
+        headers:{
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify(body)
+    }
+    fetch('http://127.0.0.1:5000/usuarios', requestOptions)
+    .then(
+        res =>{if (res.status === 201) {
+            return res.json();
+          }if (res.status === 400){
+            
+            Swal.fire({
+                title: 'Error!',
+                text: res.message,
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+          }
+           else {
+            throw new Error("Algo salió mal en el servidor API");
+          }}
+    )
+    .then(
+        resp=>{
+            let respuesta = resp.message
+            //window.alert("Usuario cargado correctamente")
+            Swal.fire({
+                title: 'Ok',
+                text: 'el usuario ha sido cargado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+            })
+            window.onload
+        }
+    )
+    .catch((error)=>{
+        console.log(error)
+        window.alert(error)
+    })
 }

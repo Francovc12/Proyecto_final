@@ -10,8 +10,10 @@ const name = localStorage.getItem('username')
 
 window.onload = function(){
     document.getElementById("bienvenida").innerHTML = 'Bienvenido ' + name;
+    ocultarFormusuario()
 }
 function historial_ventas(){
+  ocultarFormusuario()
   const requestOptions = {
     method:'GET',
     headers:{
@@ -52,10 +54,11 @@ function historial_ventas(){
 }
 
 function stock(){
+  ocultarFormusuario()
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
   //instancio un objeto grid para hacer una tabla
-  new gridjs.Grid({
+  var stock = new gridjs.Grid({
     //buqueda activa y con paginas de limite de 2 productos
     search: true,
     pagination:{
@@ -80,13 +83,14 @@ function stock(){
         throw Error("Algo salió mal en el servidor API");
       },
     }
-  }).render(document.getElementById("recurso"));//para renderizar se necesita estar vacio el div
+  }).render(document.getElementById("recurso"))
+  stock.forceRender();//para renderizar se necesita estar vacio el div
 }
 
 function ventas_productos(){
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
-  new gridjs.Grid({
+  var productos = new gridjs.Grid({
     search: true,
     pagination:{
       limit: 2,
@@ -109,13 +113,17 @@ function ventas_productos(){
         throw Error("Algo salió mal en el servidor API");
       },
     }
-  }).render(document.getElementById("recurso"));//para renderizar se necesita estar vacio el div
+  }).render(document.getElementById("recurso"))
+  productos.forceRender();//para renderizar se necesita estar vacio el div
 }
 
 function ventas_servicios(){
   document.getElementById("botonesrec").innerHTML=""
   document.getElementById("recurso").innerHTML=""
-  new gridjs.Grid({
+
+  var servicio = new gridjs.Grid({
+    resizable: true,
+    sort: true,
     search: true,
     pagination:{
       limit: 2,
@@ -129,18 +137,63 @@ function ventas_servicios(){
         'id-usuario' : iduser
       },
       url: `http://127.0.0.1:5000/usuarios/${iduser}/factura/Rankingventaservicio`,
-      //then: data => data.data.map(servicio=>[servicio.servicio,servicio.cantidad]),
-      then:(data) => data.total,
+      then: data => data.map(servicio=>[servicio.servicio,servicio.cantidad]),
+      //then:(data) => data.total,
       handle: (res) => {
         var clone = res.clone()
         var resp = clone.json()
         if (res.ok) return res.json();
         // si sale error la tabla queda vacia sino hay un error de servidor en cualquier caso
-        if (resp.message === "No hay ventas servicios cargados") return {data: []};
+        if (resp.message === "No hay ventas servicios cargados") throw Error("No hay ventas servicios cargados");//{data: []};
         
         
         throw Error("Algo salió mal en el servidor API");
       },
     }
-  }).render(document.getElementById("recurso"));
+  }).render(document.getElementById("recurso"))
+  servicio.forceRender();
+}
+
+function ventas_clientes(){
+  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("recurso").innerHTML=""
+
+  var cliente_ventas = new gridjs.Grid({
+    resizable: true,
+    sort: true,
+    search: true,
+    pagination:{
+      limit: 2,
+      summary: false
+    },
+    columns:["posicion","cliente","cantidad"],
+    server:{
+      method: 'GET',
+      headers:{
+        'token-acceso' : token,
+        'id-usuario' : iduser
+      },
+      url: `http://127.0.0.1:5000/usuarios/${iduser}/Rankingventasclientes`,
+      then: data => data.map(cliente=>[cliente.lugar,cliente.cliente,cliente.cantidad]),
+      //then:(data) => data.total,
+      handle: (res) => {
+        var clone = res.clone()
+        var resp = clone.json()
+        if (res.ok) return res.json();
+        // si sale error la tabla queda vacia sino hay un error de servidor en cualquier caso
+        if (resp.message === "El usuario no registra ventas") throw Error("El usuario no registra ventas");//{data: []};
+        
+        
+        throw Error("Algo salió mal en el servidor API");
+      },
+    }
+  }).render(document.getElementById("recurso"))
+  cliente_ventas.forceRender();
+}
+
+function cargaUsuario(){
+  document.getElementById("form_usuario").removeAttribute("hidden")
+}
+function ocultarFormusuario(id){
+  document.getElementById(id).setAttribute("hidden","")
 }

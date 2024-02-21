@@ -34,6 +34,7 @@ def login():
 @app.route('/usuarios', methods = ['POST'])
 def crear_usuario():
     datos = request.get_json()
+    datos["telefono"] = int(datos["telefono"])
     try:
         nuevo_usuario = Usuario.crear_usuario(datos)
         return jsonify(nuevo_usuario), 201
@@ -81,7 +82,7 @@ def historialVentas(id_usuario):
 
 # Ruta para ver el ranking de ventas de sus clientes
 
-@app.route('/usuarios/<int:id_usuario>/rankingventasclientes', methods =['GET'])
+@app.route('/usuarios/<int:id_usuario>/Rankingventasclientes', methods =['GET'])
 @requiere_token
 @recurso_usuario
 def rankingVentasClientes(id_usuario):

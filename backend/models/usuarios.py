@@ -114,18 +114,19 @@ class Usuario():
     # Metodo para ver el ranking de ventas segun el cliente
     def rankingVentasClientes(id_usuario):
         cur = mysql.connection.cursor()
-        cur.execute('SELECT id_cliente, cant_productos FROM facturas GROUP BY id_cliente;')
+        cur.execute('SELECT id_cliente, cant_productos FROM facturas WHERE id_usuario = {0} GROUP BY id_cliente;'.format(id_usuario))
         datos = cur.fetchall()
 
         ranking_clientes = []
         numero=0
-        for row in datos:
-            numero+=1
-            cliente = row[0]
-            cantidad = row[1]
-            ranking = {"lugar":numero,"cliente": cliente, "cantidad": cantidad}
-            ranking_clientes.append(ranking)
+        if cur.rowcount > 0:
+            for row in datos:
+                numero+=1
+                cliente = row[0]
+                cantidad = row[1]
+                ranking = {"lugar":numero,"cliente": cliente, "cantidad": cantidad}
+                ranking_clientes.append(ranking)
 
-        return (ranking_clientes)
-
+            return (ranking_clientes)
+        raise DBError("El usuario no registra ventas")
         

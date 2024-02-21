@@ -9,6 +9,8 @@ from utils import recurso_usuario, requiere_token
 @recurso_usuario
 def crear_factura(id_usuario):
     datos = request.get_json()
+    datos["id_cliente"]=int(datos["id_cliente"])
+    datos["descuento"]=int(datos["descuento"])
     datos["id_usuario"]=id_usuario
     try:
         nuevaFactura= Facturas.crear_factura(datos)

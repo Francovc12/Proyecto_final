@@ -1,5 +1,6 @@
 function productos(){
     console.log('hola aqui van productos')
+    ocultarFormusuario()
     const requestOptions={
         method:'GET',
         headers:{

@@ -1,5 +1,6 @@
 function servicios(){
     console.log('aqui van los servicios')
+    ocultarFormusuario()
     const requestOptions={
         method:'GET',
         headers:{

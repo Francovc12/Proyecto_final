@@ -54,37 +54,40 @@
                         <div class="md-form mb-3">
                             <i class="fas fa-user prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-nombreUsuario">Nombre de usuario:</label>
-                            <input type="text" id="formRegistro-nombreUsuario" class="form-control validate mt-2" placeholder="Nombre de usuario">
+                            <input type="text" id="formRegistro-nombreUsuario" class="form-control validate mt-2" placeholder="Nombre de usuario" required>
                         </div>
 
                         <div class="md-form mb-3">
                             <i class="fas fa-lock prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-contraseña">Contraseña:</label>
-                            <input type="password" id="formRegistro-contraseña" class="form-control validate mt-2" placeholder="Contraseña">
+                            <input type="password" maxlength="6" id="formRegistro-contrasenia" class="form-control validate mt-2" placeholder="Contraseña" required>
+                            <div id="passwordHelpBlock" class="form-text">
+                                Tu contraseña debe ser de 6 caracteres, puede contener letras y numeros.
+                            </div>
                         </div>
 
                         <div class="md-form mb-3">
                             <i class="fas fa-user prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-nombre">Nombre:</label>
-                            <input type="text" id="formRegistro-nombre" class="form-control validate mt-2" placeholder="Nombre">
+                            <input type="text" id="formRegistro-nombre" class="form-control validate mt-2" placeholder="Nombre" required>
                         </div>
 
                         <div class="md-form mb-3">
                             <i class="fas fa-user prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-apellido">Apellido:</label>
-                            <input type="text" id="formRegistro-apellido" class="form-control validate mt-2" placeholder="Apellido">
+                            <input type="text" id="formRegistro-apellido" class="form-control validate mt-2" placeholder="Apellido" required>
                         </div>
                         
                         <div class="md-form mb-3">
                             <i class="fas fa-envelope prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-telefono">Teléfono:</label>
-                            <input type="tel" id="formRegistro-telefono" class="form-control validate mt-2" pattern="[0-9]{10}" placeholder="Teléfono (sin 0 ni 15)">
+                            <input type="tel" id="formRegistro-telefono" class="form-control validate mt-2" pattern="[0-9]{10}" placeholder="Teléfono (sin 0 ni 15)" required>
                         </div>
 
                         <div class="md-form mb-3">
                             <i class="fas fa-envelope prefix grey-text"></i>
                             <label data-error="wrong" data-success="right" for="formRegistro-email">Email:</label>
-                            <input type="email" id="formRegistro-email" class="form-control validate mt-2" placeholder="Email">
+                            <input type="email" id="formRegistro-email" class="form-control validate mt-2" placeholder="Email" required>
                         </div>
                     </div>
 

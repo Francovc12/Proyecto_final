@@ -8,10 +8,12 @@ from utils import requiere_token, recurso_usuario
 @recurso_usuario
 def crear_ventas_servicio(id_usuario):
     datos = request.get_json()
+    datos["id_servicio"]=int(datos["id_servicio"])
+    datos["cantidad"]=int(datos["cantidad"])
 
     try:
         nuevo_venta_servicio = VentasServicios.crear_ventas_servicio(datos)
-        return jsonify(nuevo_venta_servicio),200
+        return jsonify(nuevo_venta_servicio),201
     except Exception as e:
         return jsonify({"message":e.args[0]}),400
     

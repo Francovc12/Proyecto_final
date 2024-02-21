@@ -189,7 +189,11 @@ a.sidebar-link:hover {
     margin: 0px auto;
     border-collapse: collapse;
   }
-
+#form_usuario{
+    width: 50%;
+    height: 600px;
+    margin: 0 auto;
+}
 footer{
     clear: both;
 }

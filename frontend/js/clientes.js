@@ -1,4 +1,5 @@
 function clientes(){
+    ocultarFormusuario()
 
     const requestOptions={
         method:'GET',

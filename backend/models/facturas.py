@@ -43,7 +43,7 @@ class Facturas():
         suma_prod = cur.fetchall()
         suma = 0
         for row in suma_prod:
-            suma += row
+            suma += row[0]
         return suma 
     #Metodo para sumar los servicios
     def suma_servicios(id):
@@ -52,7 +52,7 @@ class Facturas():
         suma_ser = cur.fetchall()
         suma = 0
         for row in suma_ser:
-            suma += row
+            suma += row[0]
         return suma 
     #suma de los productos y sevicios
     def suma_total(id,descuento):
@@ -68,7 +68,7 @@ class Facturas():
         cur = mysql.connection.cursor()
         cur.execute('SELECT sum(cantidad) FROM ventas_productos WHERE id_factura = {0};'.format(id_factura))
         cantidad = cur.fetchall()
-        return cantidad  
+        return int(cantidad[0][0])  
 
     def crear_id():
         #consulto las cuantas facturas existentes hay 
@@ -85,9 +85,7 @@ class Facturas():
         if Facturas.verificacion_datos_ingresados(datos):
             id=Facturas.crear_id()
             datos["cant_productos"] = Facturas.cantidad_comprada(id)
-            print("paso1")
-            datos["TOTAL"]=Facturas.suma_total(id,datos["descuento"])
-            print("paso1")
+            datos["TOTAL"] = Facturas.suma_total(id,datos["descuento"])
             datos["hora_fecha"]=datetime.datetime.utcnow()
             cur = mysql.connection.cursor()
             cur.execute('INSERT INTO facturas (id_usuario,id_cliente,hora_fecha,cant_productos,descuento,TOTAL) VALUES (%s,%s,%s,%s,%s,%s)',
