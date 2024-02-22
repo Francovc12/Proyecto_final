@@ -78,9 +78,15 @@ class VentasServicios():
         raise TypeError("Error al crear Ventas_servicios - verifique los datos")
     
 
-    def ranking_ventas_servicios():
+    def ranking_ventas_servicios(servicios):
+        lista = tuple(servicios)
         cur = mysql.connection.cursor()
-        cur.execute('SELECT id_servicio, SUM(cantidad) FROM ventas_servicios GROUP BY id_servicio;')
+        if len(lista) == 1:
+            lista = lista[0]
+            print('SELECT id_servicio, SUM(cantidad) FROM ventas_servicios WHERE id_servicio in ({0}) GROUP BY id_servicio;'.format(lista))
+            cur.execute('SELECT id_servicio, SUM(cantidad) FROM ventas_servicios WHERE id_servicio in ({0}) GROUP BY id_servicio;'.format(lista))
+        else:
+            cur.execute('SELECT id_servicio, SUM(cantidad) FROM ventas_servicios WHERE id_servicio in {0} GROUP BY id_servicio;'.format(lista))
         datos = cur.fetchall()
         lista_servicios=[]
         if cur.rowcount > 0 : 

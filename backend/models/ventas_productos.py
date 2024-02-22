@@ -71,9 +71,14 @@ class VentasProducto():
             raise DBError("Error al crear venta de un producto")
         raise TypeError("Error al crear Ventas_Producto - verifique los datos")
     
-    def Ranking_ventas_productos():
+    def Ranking_ventas_productos(productos):
+        lista=tuple(productos)
         cur = mysql.connection.cursor()
-        cur.execute('SELECT id_producto, SUM(cantidad) FROM ventas_productos GROUP BY id_producto;')
+        if len(lista) == 1:
+            lista = lista[0]
+            cur.execute('SELECT id_producto, SUM(cantidad) FROM ventas_productos WHERE id_producto in ({0}) GROUP BY id_producto;'.format(lista))
+        else:
+            cur.execute('SELECT id_producto, SUM(cantidad) FROM ventas_productos WHERE id_producto in {0} GROUP BY id_producto;'.format(lista))
         datos = cur.fetchall()
         lista_productos=[]
         if cur.rowcount > 0 : 

@@ -189,10 +189,10 @@ function ventas_clientes(){
         var resp = clone.json()
         if (res.ok) return res.json();
         // si sale error la tabla queda vacia sino hay un error de servidor en cualquier caso
-        if (resp.message === "El usuario no registra ventas") throw Error("El usuario no registra ventas");//{data: []};
+        if (resp["message"] === "El usuario no registra ventas"){ {data:[]} throw Error("El usuario no registra ventas")};//{data: []};
         
         
-        throw Error("Algo salió mal en el servidor API");
+        //throw Error("Algo salió mal en el servidor API");
       },
     }
   }).render(document.getElementById("recurso"))

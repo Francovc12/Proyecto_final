@@ -1,6 +1,7 @@
 from main import app, mysql
 from flask import request, jsonify
 from models.ventas_servicios import VentasServicios
+from models.servicios import Servicios
 from utils import requiere_token, recurso_usuario
 
 @app.route('/usuarios/<int:id_usuario>/factura/ventaservicio', methods=['POST'])
@@ -23,7 +24,12 @@ def crear_ventas_servicio(id_usuario):
 @recurso_usuario
 def ranking_ventas_servicios(id_usuario):
     try:
-        lista_ranking = VentasServicios.ranking_ventas_servicios()
+        lista=[]
+        servicios = Servicios.obtener_servicios(id_usuario)
+        for servicio in servicios:
+            lista.append(servicio["id_servicio"])
+        print(lista)
+        lista_ranking = VentasServicios.ranking_ventas_servicios(lista)
         return lista_ranking, 200
     except Exception as e:
         return jsonify({"message": e.args[0]}), 400
