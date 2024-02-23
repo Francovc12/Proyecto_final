@@ -92,7 +92,7 @@ class Producto():
         cur.execute('UPDATE productos SET nombre_producto = %s, marca = %s, precio = %s, categoria = %s, descripcion = %s, stock = %s WHERE id_producto = %s',
                     (datos["nombre_producto"],datos["marca"],datos["precio"],datos["categoria"],datos["descripcion"],datos["stock"],id_producto))
         mysql.connection.commit()
-        if cur.rowcount > 0 :
+        if cur.rowcount >= 0 :
             return Producto.producto_por_id(id_producto)
         raise DBError("error al actualizar producto")
     

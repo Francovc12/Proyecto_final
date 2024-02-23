@@ -39,3 +39,88 @@ function servicios(){
     )
     .catch((error) => { console.log("Promesa rechazada por" , error)});
 }
+function editar_servicio(id){
+    let row = document.getElementById(id);
+    console.log(row.children);
+
+    for ( let i =1; i <=3; i++){
+        row.children[i].contentEditable = true;
+        row.children[i].classList.toggle('editing');
+    }
+    row.children[4].innerHTML=`<td><button onclick=guardar_servicio(${id}) class="btn btn-outline-secondary">Guardar</button>
+    <button onclick=eliminar_servicio(${id}) disabled class="btn btn-outline-danger">Eliminar</button></td>`
+}
+
+function guardar_servicio(id){
+    let row = document.getElementById(id);
+    console.log(row.children);
+
+    for ( let i =1; i <=3; i++){
+        row.children[i].contentEditable = false;
+        row.children[i].classList.toggle('editing');
+    }
+    row.children[4].innerHTML=`<td><button onclick=editar_servicio(${id}) class="btn btn-outline-secondary">Modificar</button>
+    <button onclick=eliminar_servicio(${id}) class="btn btn-outline-danger">Eliminar</button></td>`
+
+    let datos = row.children
+    const servicio = {
+        "nombre_servicio" : datos[1].textContent ,
+        "precio": datos[3].textContent,
+        "descripcion": datos[2].textContent   
+    }
+    const requestOptions={
+        method:'PUT',
+        headers:{
+            'token-acceso' : token,
+            'id-usuario' : iduser,
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify(servicio)
+    }
+    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/servicios/${id}`, requestOptions)
+    .then(
+        res=>{if (res.status === 200 || res.status === 400) {
+            return res.json();
+          } else {
+            throw new Error("Algo salió mal en el servidor API");
+          }
+        }
+    )
+    .then(
+        data=>{
+            console.log(data);
+            datos[1].innerHTML = data.nombre_servicio;
+            datos[2].innerHTML = data.descripcion;
+            datos[3].innerHTML = data.precio;
+        }
+    )
+    .catch(
+        (error) => { console.log("Promesa rechazada por" , error)}
+    )
+}
+
+function eliminar_servicio(id){
+    const requestOptions={
+        method:'DELETE',
+        headers:{
+            'token-acceso' : token,
+            'id-usuario' : iduser
+        }
+    }
+    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/servicios/${id}`, requestOptions)
+    .then(
+        res=>{if (res.status === 200 || res.status === 400) {
+            return res.json();
+          } else {
+            throw new Error("Algo salió mal en el servidor API");
+          }
+        }
+    )
+    .then(
+        data=>{
+            console.log(data);
+            servicios();
+        }
+    )
+    .catch((error) => { console.log("Promesa rechazada por" , error)})
+}

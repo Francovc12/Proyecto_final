@@ -45,6 +45,8 @@ def crear_producto(id_usuario):
 @recurso_usuario
 def modificar_producto(id_usuario,id_prod):
     datos = request.get_json()
+    datos["precio"]= int(datos["precio"])
+    datos["stock"]=int(datos["stock"])
     datos["id_usuario"] = id_usuario
     try:
         modificar_producto = Producto.actualizar_producto(id_prod,datos)

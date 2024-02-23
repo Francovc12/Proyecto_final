@@ -64,7 +64,7 @@ class Servicios():
         cur.execute('UPDATE servicios SET nombre_servicio = %s,precio = %s, descripcion = %s WHERE id_servicio = %s',
                     (datos["nombre_servicio"],datos["precio"],datos["descripcion"],id_servicio))
         mysql.connection.commit()
-        if cur.rowcount > 0 :
+        if cur.rowcount >= 0 :
             return Servicios.servicio_por_id(id_servicio)
         raise DBError("error al actualizar servicio")
     
