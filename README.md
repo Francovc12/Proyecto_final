@@ -56,6 +56,6 @@ Es el punto de inicio de la aplicación, su función es importar el objeto app y
 El cual correra en la siguiente dirrecion:
 http://127.0.0.1:5000
 ### Directorios 
-+ /api organiza la estructura interna de la aplicación.
-+ /api/routes contiene todos los archivos relacionados con las creaciones de rutas, cada uno agrupando las rutas referidas a un mismo recurso.
-+ /api/models contiene todos los archivos relacionados con las definiciones de clases, con logica para integrar la BD con la api.
++ /backend organiza la estructura interna de la aplicación.
++ /backend/routes contiene todos los archivos relacionados con las creaciones de rutas, cada uno agrupando las rutas referidas a un mismo recurso.
++ /backend/models contiene todos los archivos relacionados con las definiciones de clases, con logica para integrar la BD con la api.
