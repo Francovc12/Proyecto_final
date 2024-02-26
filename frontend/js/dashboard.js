@@ -15,48 +15,41 @@ window.onload = function(){
 }
 function historial_ventas(){
   ocultarFormusuario()
-  const requestOptions = {
-    method:'GET',
-    headers:{
+  document.getElementById("botonesrec").innerHTML="<h3 id='subtitulo'>Historial de ventas</h3>"
+  document.getElementById("recurso").innerHTML=""
+
+  var historial = new gridjs.Grid({
+    resizable: true,
+    sort: true,
+    search: true,
+    pagination:{
+      limit: 2,
+      summary: false
+    },
+    columns : ["id_factura","id_cliente","fecha y hora","cantidad de productos","descuento","total"],
+    server:{
+      method: 'GET',
+      headers:{
         'token-acceso' : token,
         'id-usuario' : iduser
+      },
+      url:`http://127.0.0.1:5000/usuarios/${iduser}/historialventas`,
+      then: data=> data.map(factura =>[factura.id_factura,factura.id_cliente,factura.hora_fecha,factura.cant_productos,factura.descuento,factura.TOTAL]),
+      handle: (res) => {
+        // si sale error la tabla queda vacia sino hay un error de servidor en cualquier caso
+        if (res.status === 400) return {data: []};
+        if (res.ok) return res.json();
+        
+        throw Error("Algo salió mal en el servidor API");
+      }, 
     }
-  }
-  fetch(`http://127.0.0.1:5000/usuarios/${iduser}/historialventas`, requestOptions)
-  .then(
-      res =>{if (res.status === 200 || res.status === 400) {
-          return res.json();
-        } else {
-          throw new Error("Algo salió mal en el servidor API");
-        }}
-  )
-  .then(
-    resp=>{
-      document.getElementById('botonesrec').innerHTML=''
-      document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Historial de ventas</h2><table id="tablahistorial" class="table table-hover table-sm"> </table>'
-      var lista_historial = "<thead><tr><th>ID</th><th>id cliente</th><th>fecha y hora</th><th>Productos</th><th>Descuento</th><th>total</th></tr></thead>"
-      if (resp.length === 0){
-          lista_historial = lista_historial.concat(sinRegistro)
-      }
-      for(let i = 0; i < resp.length; i++){
-          let factura=`<tr id=${resp[i].id_factura}>
-          <td>${resp[i].id_factura}</td>
-          <td>${resp[i].id_cliente}</td>
-          <td>${resp[i].hora_fecha}</td>
-          <td>${resp[i].cant_productos}</td>
-          <td>${resp[i].descuento}</td>
-          <td>${resp[i].TOTAL}</td></tr>`
-          lista_historial = lista_historial.concat(factura)
-      }
-      document.getElementById("tablahistorial").innerHTML=(lista_historial)
-    }
-  )
-  .catch((error) => { console.log("Promesa rechazada por" , error)});
+  }).render(document.getElementById("recurso"))
+  historial.forceRender();
 }
 
 function stock(){
   ocultarFormusuario()
-  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("botonesrec").innerHTML="<h3 id='subtitulo'>Informe de stock</h3>"
   document.getElementById("recurso").innerHTML=""
   //instancio un objeto grid para hacer una tabla
   var stock = new gridjs.Grid({
@@ -92,7 +85,7 @@ function stock(){
 
 function ventas_productos(){
   ocultarFormusuario()
-  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("botonesrec").innerHTML="<h3 id='subtitulo'>Ventas por productos</h3>"
   document.getElementById("recurso").innerHTML=""
   var productos = new gridjs.Grid({
     resizable: true,
@@ -125,7 +118,7 @@ function ventas_productos(){
 
 function ventas_servicios(){
   ocultarFormusuario()
-  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("botonesrec").innerHTML="<h3 id='subtitulo'>Ventas por servicio</h3>"
   document.getElementById("recurso").innerHTML=""
 
   var servicio = new gridjs.Grid({
@@ -163,7 +156,7 @@ function ventas_servicios(){
 
 function ventas_clientes(){
   ocultarFormusuario()
-  document.getElementById("botonesrec").innerHTML=""
+  document.getElementById("botonesrec").innerHTML="<h3 id='subtitulo'>Ventas por cliente</h3>"
   document.getElementById("recurso").innerHTML=""
 
   var cliente_ventas = new gridjs.Grid({
@@ -208,6 +201,7 @@ function cargaUsuario(){
 function ocultarFormusuario(){
   document.getElementById("form_usuario").setAttribute("hidden","")
   document.getElementById("dashboard").setAttribute("hidden","")
+  document.getElementById("form-factura").setAttribute("hidden","")
 }
 
 function home(){

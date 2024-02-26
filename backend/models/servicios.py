@@ -85,9 +85,9 @@ class Servicios():
         cur.execute('SELECT * FROM servicios WHERE id_usuario = {0}'.format(id_usuario))
         data = cur.fetchall()
         lista_servicios =[]
-        if cur.rowcount > 0:
-            for row in data:
-                objServicio = Servicios(row)
-                lista_servicios.append(objServicio.to_json())
-            return lista_servicios
-        return jsonify("No hay Servicios cargados")
+        
+        for row in data:
+            objServicio = Servicios(row)
+            lista_servicios.append(objServicio.to_json())
+        return lista_servicios
+        

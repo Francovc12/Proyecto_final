@@ -68,7 +68,11 @@ class Facturas():
         cur = mysql.connection.cursor()
         cur.execute('SELECT sum(cantidad) FROM ventas_productos WHERE id_factura = {0};'.format(id_factura))
         cantidad = cur.fetchall()
-        return int(cantidad[0][0])  
+        if cantidad[0][0] == None:
+            cantidad = 0
+        else:
+            cantidad=cantidad[0][0]
+        return cantidad  
 
     def crear_id():
         #consulto las cuantas facturas existentes hay 
@@ -77,6 +81,7 @@ class Facturas():
         existen_ids=cur.fetchall()
         if cur.rowcount > 0:
             id_factura = existen_ids[0][1] + 1
+            print(id_factura)
             return id_factura
         raise DBError('no se obtuvo las id')
 

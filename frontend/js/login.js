@@ -14,7 +14,7 @@ function login_usuario(){
             title: 'Error!',
             text: 'Ingrese el usuario y la contraseña',
             icon: 'error',
-            confirmButtonText: 'Cool'
+            confirmButtonText: 'Volver'
         })
     }
     else {
@@ -56,12 +56,23 @@ function registrar_usuario(){
     var apellido = document.getElementById("formRegistro-apellido").value;
     var telefono = document.getElementById("formRegistro-telefono").value;
     var email = document.getElementById("formRegistro-email").value;
+
     var body = {  "nombre_usuario": nombreusuario,
     "contrasenia": contrasenia,
     "nombre": nombre,
     "apellido": apellido,
     "telefono": telefono,
     "email": email}
+    if (nombreusuario == "" || contrasemia == "" || nombre == "" || apellido == "" || telefono == "" || email == "")
+    {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Ingrese todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Volver'
+        })
+    }
+    else{
     const requestOptions={
         method:'POST',
         headers:{
@@ -94,13 +105,18 @@ function registrar_usuario(){
                 title: 'Ok',
                 text: 'el usuario ha sido cargado correctamente',
                 icon: 'success',
-                confirmButtonText: 'Cool'
+                confirmButtonText: 'ok'
             })
             window.onload
         }
     )
     .catch((error)=>{
         console.log(error)
-        window.alert(error)
-    })
+        Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'Volver'
+        })
+    })}
 }

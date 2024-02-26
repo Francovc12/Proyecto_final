@@ -18,8 +18,8 @@ function clientes(){
     )
     .then(
         resp=>{
-            document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
-            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Clintes</h2><table id=tablacliente class="table table-hover table-sm"> </table>'
+            document.getElementById('botonesrec').innerHTML='<h3 id="subtitulo">Clientes</h3><button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroCliente">Agregar cliente</button>'
+            document.getElementById("recurso").innerHTML = '<table id=tablacliente class="table table-hover table-sm"> </table>'
             var clientes = "<thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Dni</th><th>Email</th><th>accion</th></tr></thead>"
             if (resp.length == 0){
                 clientes = clientes.concat(sinRegistro)
@@ -49,11 +49,22 @@ function clientes(){
 }
 
 function registrar_cliente(){
+    document.getElementById("mensaje-registro").innerHTML=""
     const nombre = document.getElementById('formRegistro-nombre').value;
     const apellido = document.getElementById('formRegistro-apellido').value;
     const dni = document.getElementById('formRegistro-dni').value;
     const email = document.getElementById('formRegistro-email').value;
     const body ={"nombre":nombre, "apellido": apellido, "dni":dni, "email": email}
+    if (nombre == "" || apellido == "" || dni == "" || email == "")
+    {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Complete todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Volver'
+        })
+    }
+    else{
     const requestOptions={
         method: 'POST',
         headers:{
@@ -76,14 +87,32 @@ function registrar_cliente(){
     .then(
         resp=>{
             console.log(nombre,apellido,dni,email,resp)
+
             let respuesta = resp.message
-            document.getElementById("mensaje-registro").innerHTML=`<p>${respuesta}</p>`
-        }
+            if (respuesta=="Error creando el cliente - el cliente ya existe"){
+                Swal.fire({
+                    title: 'Error!',
+                    text: respuesta,
+                    icon: 'error',
+                    confirmButtonText: 'Volver'
+                })
+            }
+            else{
+            //document.getElementById("mensaje-registro").innerHTML=`<p>${respuesta}</p>`
+            
+            Swal.fire({
+                title: 'Ok',
+                text: 'el cliente ha sido cargado correctamente',
+                icon: 'success',
+                confirmButtonText: 'ok'
+            })
+            clientes()
+        }}
     )
     .catch((error) => {
         console.error(error)
         document.getElementById("mensaje-registro").innerHTML=`<p>${error}</p>`;
-      });
+      });}
 }
 
 function editar_cliente(id){
@@ -155,29 +184,47 @@ function guardar(id){
     )
 }
 function eliminar_cliente(id){
-    //realizo la peticion delete 
-    const requestOptions={
-        method:'DELETE',
-        headers:{
-            'token-acceso' : token,
-            'id-usuario' : iduser
+    //realizo la peticion delete
+    Swal.fire({
+        title: "¿Estas seguro?",
+        text: "No se podra revertir la accion",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SI,Eliminar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "EL cliente a sido eliminado",
+            icon: "success"
+          });
+          const requestOptions={
+            method:'DELETE',
+            headers:{
+                'token-acceso' : token,
+                'id-usuario' : iduser
+            }
+    
         }
-
-    }
-    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/clientes/${id}`,requestOptions)
-    .then(
-        res=>{if (res.status === 200 || res.status === 400) {
-            return res.json();
-          } else {
-            throw new Error("Algo salió mal en el servidor API");
-          }
+        fetch(`http://127.0.0.1:5000/usuarios/${iduser}/clientes/${id}`,requestOptions)
+        .then(
+            res=>{if (res.status === 200 || res.status === 400) {
+                return res.json();
+              } else {
+                throw new Error("Algo salió mal en el servidor API");
+              }
+            }
+        )
+        .then(
+            data=>{
+                console.log(data);
+                clientes();
+            }
+        )
+        .catch((error) => { console.log("Promesa rechazada por" , error)})
         }
-    )
-    .then(
-        data=>{
-            console.log(data);
-            clientes();
-        }
-    )
-    .catch((error) => { console.log("Promesa rechazada por" , error)})
+      }); 
+    
 }

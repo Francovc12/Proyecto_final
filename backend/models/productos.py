@@ -48,7 +48,7 @@ class Producto():
         cur.fetchall()
         return cur.rowcount > 0
     
-    """Metodo para consultar en la base de datos un producto de acuierdo a su id_producto"""
+    """Metodo para consultar en la base de datos un producto de acuerdo a su id_producto"""
     def producto_por_id(id_producto):
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM productos WHERE id_producto = {0}'.format(id_producto))
@@ -62,13 +62,12 @@ class Producto():
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM productos WHERE id_usuario = {0}'.format(id_usuario))
         data = cur.fetchall()
-        lista_productos=[]
-        if cur.rowcount > 0:            
-            for row in data:
-                objProducto = Producto(row)
-                lista_productos.append(objProducto.to_json())
-            return lista_productos
-        return jsonify("No hay Productos cargados")
+        lista_productos=[]           
+        for row in data:
+            objProducto = Producto(row)
+            lista_productos.append(objProducto.to_json())
+        return lista_productos
+
     
     """Metodo para realizar la creacion de un producto nuevo de acuerdo a los datos enviados desde el frontend"""
     def crear_producto(data):

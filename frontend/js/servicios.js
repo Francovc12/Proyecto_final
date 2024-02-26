@@ -18,10 +18,10 @@ function servicios(){
     )
     .then(
         resp=>{
-            document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroservicio">Registrar servicio</button>'
-            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Servicios</h2><table id="tablaservicio" class="table table-hover table-sm"> </table>'
+            document.getElementById('botonesrec').innerHTML='<h3 id="subtitulo">Servicios</h3><button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroservicio">Registrar servicio</button>'
+            document.getElementById("recurso").innerHTML = '<table id="tablaservicio" class="table table-hover table-sm"> </table>'
             var lista_servicio = "<thead><tr><th>ID</th><th>servicio</th><th>descripcion</th><th>precio</th><th>acciones</th></tr></thead>"
-            if (resp.length === 0){
+            if (resp.length == 0){
                 lista_servicio = lista_servicio.concat(sinRegistro)
             }
             for(let i = 0; i < resp.length; i++){
@@ -100,27 +100,107 @@ function guardar_servicio(id){
 }
 
 function eliminar_servicio(id){
-    const requestOptions={
-        method:'DELETE',
-        headers:{
-            'token-acceso' : token,
-            'id-usuario' : iduser
+    Swal.fire({
+        title: "¿Estas seguro?",
+        text: "No se podra revertir la accion",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SI,Eliminar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El producto a sido eliminado",
+            icon: "success"
+          });
+        const requestOptions={
+            method:'DELETE',
+            headers:{
+                'token-acceso' : token,
+                'id-usuario' : iduser
+            }
         }
-    }
-    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/servicios/${id}`, requestOptions)
-    .then(
-        res=>{if (res.status === 200 || res.status === 400) {
-            return res.json();
-          } else {
-            throw new Error("Algo salió mal en el servidor API");
-          }
+        fetch(`http://127.0.0.1:5000/usuarios/${iduser}/servicios/${id}`, requestOptions)
+        .then(
+            res=>{if (res.status === 200 || res.status === 400) {
+                return res.json();
+            } else {
+                throw new Error("Algo salió mal en el servidor API");
+            }
+            }
+        )
+        .then(
+            data=>{
+                console.log(data);
+                servicios();
+            }
+        )
+        .catch((error) => { console.log("Promesa rechazada por" , error)})
+        }})
+}
+//funcion registro de servicio
+function registrar_servicio(){
+    document.getElementById("mensaje-registro").innerHTML=""
+    const servicio_nombre = document.getElementById("Servicio_nombre").value;
+    const servicio_descripcion = document.getElementById("Servicio_descripcion").value;
+    const servicio_precio = document.getElementById("Servicio_precio").value;
+
+    if (servicio_nombre == "" || servicio_descripcion == "" || servicio_precio == ""){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Ingrese todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Volver'
+        })
+    }else{
+        const body={
+            "nombre_servicio": servicio_nombre,
+            "precio": servicio_precio,
+            "descripcion": servicio_descripcion
         }
-    )
-    .then(
-        data=>{
-            console.log(data);
-            servicios();
+        const requestOptions={
+            method: 'POST',
+            headers:{
+                'token-acceso' : token,
+                'id-usuario' : iduser,
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify(body)
         }
-    )
-    .catch((error) => { console.log("Promesa rechazada por" , error)})
+        fetch(`http://127.0.0.1:5000/usuarios/${iduser}/servicios`, requestOptions)
+        .then(
+            res =>{
+                if (res.status === 201 || res.status === 400) {
+                return res.json();
+                } else {
+                throw new Error("Algo salió mal en el servidor API");
+                }
+            }
+        )
+        .then(
+            resp=>{
+                console.log(servicio_nombre,servicio_descripcion,servicio_precio,resp)
+                let respuesta = resp.message
+                Swal.fire({
+                    title: 'Ok',
+                    text: respuesta,
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                document.getElementById("mensaje-registro").innerHTML=`<p>${respuesta}</p>`
+                servicios()
+            }
+        )
+        .catch((error) => {
+            console.error(error)
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'Volver'
+            })
+            document.getElementById("mensaje-registro").innerHTML=`<p>${error}</p>`;
+        });}
 }

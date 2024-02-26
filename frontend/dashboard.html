@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard new</title>
+    <title>Dashboard</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -15,6 +15,9 @@
 </head>
 
 <body>
+    <!--SweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
@@ -73,24 +76,24 @@
                             <a href="#recurso" onclick="stock()" class="sidebar-link">Stock</a>
                         </li>
                     </ul>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                            data-bs-target="#rankings" aria-expanded="false" aria-controls="rankings">
-                            <i class="lni lni-stats-up"></i>
-                            <span>Rankings</span>
-                        </a>
-                        <ul id="rankings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a href="#recurso" onclick="ventas_productos()" class="sidebar-link">Ventas de productos</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#recurso" onclick="ventas_servicios()" class="sidebar-link">Ventas de servicios</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="#recurso" onclick="ventas_clientes()" class="sidebar-link">Ventas por cliente</a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#rankings" aria-expanded="false" aria-controls="rankings">
+                        <i class="lni lni-stats-up"></i>
+                        <span>Rankings</span>
+                    </a>
+                    <ul id="rankings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="#recurso" onclick="ventas_productos()" class="sidebar-link">Ventas de productos</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#recurso" onclick="ventas_servicios()" class="sidebar-link">Ventas de servicios</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#recurso" onclick="ventas_clientes()" class="sidebar-link">Ventas por cliente</a>
+                        </li>
+                    </ul>
+                </li>
                 </li>
             </ul>
             <div class="sidebar-footer">
@@ -107,15 +110,15 @@
             </div>
             <!--pagina home de dashboard-->
             <div id="dashboard" class="row">
-                <div class="card text-center m-3" style="width: 22%;"> 
-                    <img src="./img/Clientes.png" alt="" class="card-img-top"style="height:150px;">
+                <div class="card text-center m-3">
+                    <img src="./img/Clientes.png" alt="" class="card-img-top" style="height:150px;">
                     <div class="card-body">
                         <h4 class="card-title">Clientes</h4>
                         <p class="card-text">Aqui puede gestionar sus clientes</p>
                         <a href="#" class="btn btn-primary" onclick="clientes()">Ingresar</a>
                     </div>
                 </div>
-                <div class="card text-center m-3" style="width: 22%;"> 
+                <div class="card text-center m-3">
                     <img src="./img/Facturacion.png" alt="" class="card-img-top" style="height:150px;">
                     <div class="card-body">
                         <h4 class="card-title">Facturas</h4>
@@ -123,16 +126,16 @@
                         <a href="#" class="btn btn-primary" onclick="facturas()">Ingresar</a>
                     </div>
                 </div>
-                <div class="card text-center m-3" style="width: 22%;"> 
-                    <img src="./img/Productos.png" alt="" class="card-img-top"style="height:150px;">
+                <div class="card text-center m-3">
+                    <img src="./img/Productos.png" alt="" class="card-img-top" style="height:150px;">
                     <div class="card-body">
                         <h4 class="card-title">Productos</h4>
                         <p class="card-text">Aqui gestiona sus productos</p>
                         <a href="#" class="btn btn-primary" onclick="productos()">Ingresar</a>
                     </div>
                 </div>
-                <div class="card text-center m-3" style="width: 22%;"> 
-                    <img src="./img/Servicios.png" alt="" class="card-img-top"style="height:150px;">
+                <div class="card text-center m-3">
+                    <img src="./img/Servicios.png" alt="" class="card-img-top" style="height:150px;">
                     <div class="card-body">
                         <h4 class="card-title">Servicios</h4>
                         <p class="card-text">Aqui gestiona sus servicios</p>
@@ -142,39 +145,74 @@
 
             </div>
             <div id="botonesrec"></div>
-            <div id="recurso" ></div>
-            <div class="modal fade" id="modalRegistroCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div id="recurso"></div>
+            <div id="form-factura" hidden>
+                <!-- Formulario de Productos -->
+                <form id="form_producto" class="my-2 border rounded border-black">
+                    <label for="form_producto">Selecciona los productos a facturar:</label>
+                    <br>
+                    <label for="form_producto">Producto:</label>
+                    <select name="producto" id="producto_nombre" class="form-select"></select>
+                    <label for="form_producto">Cantidad:</label>
+                    <input type="number" name="cantidad" id="producto_cantidad" min="1" step="1"
+                    placeholder="Ingrese cantidad" required>
+                    <br>
+                </form>
+                    <button class="btn btn-primary" onclick="formagregarproducto()">Agregar producto</button>
+                   <!-- <button onclick="registrar_vntproducto()" class="btn btn-primary">Registrar productos seleccionados</button>
+
+
+                <!-- Formulario de Servicios -->
+                <form id="form_servicio" class="my-2 border rounded border-black">
+                    <label for="servicios">Selecciona los servicios a facturar:</label>
+                    <br>
+                    <select name="servicio" id="servicio_nombre" class="form-select"></select>
+                    <label for="servicios">Cantidad:</label>
+                    <input type="number" name="cantidadserv" id="servicio_cantidad" min="1" step="1"
+                    placeholder="Ingrese cantidad" required>
+                    <br>
+                </form>
+                    <button class="btn btn-primary" onclick="formagregarservicio()">Agregar servicio</button>
+
+                <!-- Formulario de facturacion-->
+                <h5>Recuerde antes de facturar registre los productos o servicios necesarios</h5>
+                <form id="Facturar" class="my-2 border rounded border-black">
+                    <label for="servicios">Selecciona cliente a facturar:</label>
+                    <select name="id_cliente" id="cliente" class="form-select"></select>
+                    <label for="Facturar">Descuento:</label>
+                    <input type="number" name="descuento" id="cliente_descuento" placeholder="Ingrese descuento"
+                        required>
+                    <br>
+                    
+                </form>
+                <button onclick="crearfactura()" class="btn btn-primary" >Registrar factura</button>
+            </div>
+
+            <!-- Modal de registro de clientes -->
+            <div class="modal fade" id="modalRegistroCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header text-center">
-                            <h4 class="modal-title w-100 font-weight-bold">Registrar Cliente</h4>
+                            <h4 class="modal-title fs-5">Registrar Cliente</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-    
-                        <div class="md-form mb-3">
-                            <i class="fas fa-user prefix grey-text"></i>
+
+                        <div class="modal-body">
                             <label data-error="wrong" data-success="right" for="formRegistro-nombre">Nombre:</label>
-                            <input type="text" id="formRegistro-nombre" class="form-control validate mt-2" placeholder="Nombre">
-                        </div>
-    
-                        <div class="md-form mb-3">
-                            <i class="fas fa-user prefix grey-text"></i>
+                            <input type="text" id="formRegistro-nombre" class="form-control validate mt-2"
+                                placeholder="Nombre">
                             <label data-error="wrong" data-success="right" for="formRegistro-apellido">Apellido:</label>
-                            <input type="text" id="formRegistro-apellido" class="form-control validate mt-2" placeholder="Apellido">
-                        </div>
-                        
-                        <div class="md-form mb-3">
-                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <input type="text" id="formRegistro-apellido" class="form-control validate mt-2"
+                                placeholder="Apellido">
                             <label data-error="wrong" data-success="right" for="formRegistro-telefono">DNI:</label>
-                            <input type="tel" id="formRegistro-dni" class="form-control validate mt-2" pattern="[0-9]{8}" placeholder="DNI">
-                        </div>
-    
-                        <div class="md-form mb-3">
-                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <input type="tel" id="formRegistro-dni" class="form-control validate mt-2"
+                                pattern="[0-9]{8}" placeholder="DNI">
                             <label data-error="wrong" data-success="right" for="formRegistro-email">Email:</label>
-                            <input type="email" id="formRegistro-email" class="form-control validate mt-2" placeholder="Email">
+                            <input type="email" id="formRegistro-email" class="form-control validate mt-2"
+                                placeholder="Email">
                         </div>
-    
+
                         <div class="modal-footer d-flex justify-content-center">
                             <button class="btn btn-primary" onclick="registrar_cliente()">Registrar</button>
                         </div>
@@ -182,74 +220,9 @@
                     </div>
                 </div>
             </div>
-            <!--modal de resitro factura compuesto por tres modales diferentes : venta_producto para agregar productos y venta_servicio para agregar servicios y cliente para facturar clientes-->
-            <div class="modal fade" id="modalRegistrofactura"  aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Facture Productos</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="form_producto">
-                        <label for="productos">Selecciona los productos a facturar:</label>
-                        <br>
-                        <button class="btn btn-primary" onclick="formagregarproducto()">Agregar producto</button>
-                        <br>
-                        <label for="productos">Producto:</label>
-                        <select name="producto" id="producto_nombre" class="form-select"></select>
-                        <label for="productos">Cantidad:</label>
-                        <input type="number" name="cantidad" id="producto_cantidad" min="1" step="1">
-
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" onclick="cargaservicios()" data-bs-target="#registroventasservicios" data-bs-toggle="modal">Continuar sin registrar</button>
-                      <button onclick="registrar_vntproducto()" class="btn btn-primary" data-bs-target="#registroventasservicios" data-bs-toggle="modal">Registrar productos seleccionados</button><!--abre el otro modal-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal fade" id="registroventasservicios" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Facture Servicios</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="form_servicio">
-                        <label for="servicios">Selecciona los servicios a facturar:</label>
-                        <br>
-                        <button class="btn btn-primary" onclick="formagregarservicio()">Agregar servicio</button>
-                        <br>
-                        <select name="servicio" id="servicio_nombre" class="form-select"></select>
-                        <input type="number" name="cantidadserv" id="servicio_cantidad" min="1" step="1">
-                    </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" onclick="cargacliente()" data-bs-target="#facturar" data-bs-toggle="modal">Continuar sin registrar</button>
-                      <button onclick="registrar_vntservicio()" class="btn btn-primary" data-bs-target="#facturar" data-bs-toggle="modal">Registrar servicios</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal fade" id="facturar" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Facture al cliente</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="servicios">Selecciona cliente a facturar:</label>
-                        <select name="id_cliente" id="cliente" class="form-select"></select>
-                        <input type="number" name="descuento" id="cliente_descuento">
-                    </div>
-                    <div class="modal-footer">
-                      <button onclick="crearfactura()" class="btn btn-primary" data-bs-target="#facturar" data-bs-toggle="modal">Registrar factura</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Formulario de modificacion de usuarios-->
-              <form id="form_usuario" hidden>
+            
+            <!-- Formulario de modificacion de usuarios-->
+            <form id="form_usuario" hidden>
                 <h2>Modificar Usuario</h2>
                 <br>
                 <label for="form_usuario" class="form-label">Nombre de usuario:</label>
@@ -262,10 +235,10 @@
                 </div>
                 <br>
                 <label for="form_usuario" class="form-label">Nombre:</label>
-                <input type="text" id="usuario-nombre" class="form-control">
+                <input type="text" maxlength="15" id="usuario-nombre" class="form-control">
                 <br>
                 <label for="form_usuario" class="form-label">Apellido:</label>
-                <input type="text" id="usuario-apellido" class="form-control">
+                <input type="text" size="15" id="usuario-apellido" class="form-control">
                 <br>
                 <label for="form_usuario" class="form-label">Telefono:</label>
                 <input type="number" id="usuario-telefono" class="form-control">
@@ -274,18 +247,95 @@
                 <input type="email" id="usuario-email" class="form-control">
                 <br>
                 <button onclick="modificarUsuario()" class="btn btn-primary">Registrar cambios</button>
-              </form>
+                <div id="mensaje-registro"></div>
+            </form>
+
+            <!--modal de registro de productos-->
+            <div class="modal fade" id="modalRegistroproducto" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title fs-5">Registrar Producto</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <label data-error="wrong" data-success="right" for="formRegistro-nombre">Nombre
+                                Producto:</label>
+                            <input type="text" id="Producto_nombre" class="form-control validate mt-2"
+                                placeholder="Ingrese nombre del Producto" required>
+                            <label data-error="wrong" data-success="right" for="formRegistro-marca">Marca:</label>
+                            <input type="text" id="Producto_marca" class="form-control validate mt-2"
+                                placeholder="Ingrese la marca del producto" required>
+                            <label data-error="wrong" data-success="right"
+                                for="formRegistro-categoria">Categoria:</label>
+                            <input type="text" id="Producto_categoria" class="form-control validate mt-2"
+                                placeholder="Ingrese la categoria del producto" required>
+                            <label data-error="wrong" data-success="right"
+                                for="formRegistro-descripcion">Descripcion:</label>
+                            <input type="text" id="Producto_descripcion" class="form-control validate mt-2"
+                                placeholder="Ingrese la descripcion del producto" required>
+                            <label data-error="wrong" data-success="right" for="formRegistro-precio">Precio:</label>
+                            <input type="number" id="Producto_precio" class="form-control validate mt-2" pattern="[0-9]"
+                                placeholder="Ingrese precio del producto" required>
+                            <label data-error="wrong" data-success="right" for="formRegistro-stock">Stock:</label>
+                            <input type="number" id="Producto_stock" class="form-control validate mt-2" pattern="[0-9]"
+                                placeholder="Ingrese el stock del producto" required>
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-primary" onclick="registrar_producto()">Registrar</button>
+                        </div>
+                        <div id="mensaje-registro"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal registro de servicios-->
+            <div class="modal fade" id="modalRegistroservicio" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title fs-5">Registrar servicio</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <label data-error="wrong" data-success="right" for="formRegistro-nombre">Nombre
+                                servicio:</label>
+                            <input type="text" id="Servicio_nombre" class="form-control validate mt-2"
+                                placeholder="Ingrese nombre del servicio" required>
+                            <label data-error="wrong" data-success="right"
+                                for="formRegistro-descripcion">Descripcion:</label>
+                            <input type="text" id="Servicio_descripcion" class="form-control validate mt-2"
+                                placeholder="Ingrese la descripcion del servicio" required>
+                            <label data-error="wrong" data-success="right" for="formRegistro-precio">Precio:</label>
+                            <input type="number" id="Servicio_precio" class="form-control validate mt-2" pattern="[0-9]"
+                                placeholder="Ingrese precio del servicio" required>
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-primary" onclick="registrar_servicio()">Registrar</button>
+                        </div>
+                        <div id="mensaje-registro"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-    <!--grid js tablas -->
-    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-    <script src="./js/dashboard.js"></script>
-    <script src="js/clientes.js"></script>
-    <script src="js/facturas.js"></script>
-    <script src="js/productos.js"></script>
-    <script src="js/servicios.js"></script>
+<!--grid js tablas -->
+<script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/clientes.js"></script>
+<script src="js/facturas.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/servicios.js"></script>
+
 </html>

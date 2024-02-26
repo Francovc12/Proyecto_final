@@ -31,6 +31,8 @@ def obtener_producto_por_id(id_usuario, id_producto):
 @recurso_usuario
 def crear_producto(id_usuario):
     datos = request.get_json()
+    datos["precio"]= int(datos["precio"])
+    datos["stock"]=int(datos["stock"])
     datos["id_usuario"] = id_usuario
 
     try:

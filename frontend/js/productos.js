@@ -18,10 +18,10 @@ function productos(){
     )
     .then(
         resp=>{
-            document.getElementById('botonesrec').innerHTML='<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroproducto">Registrar producto</button>'
-            document.getElementById("recurso").innerHTML = '<h2 id="subtitulo">Productos</h2><table id="tablaproducto" class="table table-hover table-sm"> </table>'
+            document.getElementById('botonesrec').innerHTML='<h3 id="subtitulo">Productos</h3><button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalRegistroproducto">Registrar producto</button>'
+            document.getElementById("recurso").innerHTML = '<table id="tablaproducto" class="table table-hover table-sm"> </table>'
             var lista_producto = "<thead><tr><th>ID</th><th>categoria</th><th>marca</th><th>nombre</th><th>descripcion</th><th>precio</th><th>stock</th><th>acciones</th></tr></thead>"
-            if (resp.length === 0){
+            if (resp.length == 0){
                 lista_producto = lista_producto.concat(sinRegistro)
             }
             for(let i = 0; i < resp.length; i++){
@@ -102,27 +102,113 @@ function guardar_producto(id){
     )
 }
 function eliminar_producto(id){
-    const requestOptions={
-        method:'DELETE',
-        headers:{
-            'token-acceso' : token,
-            'id-usuario' : iduser
+    Swal.fire({
+        title: "¿Estas seguro?",
+        text: "No se podra revertir la accion",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SI,Eliminar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El producto a sido eliminado",
+            icon: "success"
+          });
+        const requestOptions={
+            method:'DELETE',
+            headers:{
+                'token-acceso' : token,
+                'id-usuario' : iduser
+            }
         }
+        fetch(`http://127.0.0.1:5000/usuarios/${iduser}/productos/${id}`, requestOptions)
+        .then(
+            res=>{if (res.status === 200 || res.status === 400) {
+                return res.json();
+            } else {
+                throw new Error("Algo salió mal en el servidor API");
+            }
+            }
+        )
+        .then(
+            data=>{
+                console.log(data)
+                productos()
+            }
+        )
+        .catch((error) => { console.log("Promesa rechazada por" , error)})
+        }})}
+
+// funcion para registrar productos
+function registrar_producto(){
+    document.getElementById("mensaje-registro").innerHTML=""
+    const producto_nombre = document.getElementById("Producto_nombre").value;
+    const producto_marca = document.getElementById("Producto_marca").value;
+    const producto_categoria = document.getElementById("Producto_categoria").value;
+    const producto_descripcion = document.getElementById("Producto_descripcion").value;
+    const producto_precio = document.getElementById("Producto_precio").value;
+    const producto_stock = document.getElementById("Producto_stock").value;
+    if (producto_nombre == "" || producto_marca == "" || producto_categoria == "" || producto_descripcion == "" || producto_precio == "" || producto_stock == ""){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Ingrese todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Volver'
+        })
+    }else{
+        const body={
+            "nombre_producto": producto_nombre,
+            "marca": producto_marca,
+            "precio": producto_precio,
+            "categoria" : producto_categoria,
+            "descripcion": producto_descripcion,
+            "stock": producto_stock
+        }
+        const requestOptions={
+            method: 'POST',
+            headers:{
+                'token-acceso' : token,
+                'id-usuario' : iduser,
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify(body)
+        }
+        fetch(`http://127.0.0.1:5000/usuarios/${iduser}/productos`, requestOptions)
+        .then(
+            res =>{
+                if (res.status === 201 || res.status === 400) {
+                return res.json();
+                } else {
+                throw new Error("Algo salió mal en el servidor API");
+                }
+            }
+        )
+        .then(
+            resp=>{
+                console.log(producto_nombre,producto_categoria,producto_descripcion,producto_marca,producto_precio,producto_stock,resp)
+                let respuesta = resp.message
+                Swal.fire({
+                    title: 'Ok',
+                    text: respuesta,
+                    icon: 'success',
+                    confirmButtonText: 'ok'
+                })
+                document.getElementById("mensaje-registro").innerHTML=`<p>${respuesta}</p>`
+                productos()
+            }
+        )
+        .catch((error) => {
+            console.error(error)
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                confirmButtonText: 'Volver'
+            })
+            document.getElementById("mensaje-registro").innerHTML=`<p>${error}</p>`;
+        });
     }
-    fetch(`http://127.0.0.1:5000/usuarios/${iduser}/productos/${id}`, requestOptions)
-    .then(
-        res=>{if (res.status === 200 || res.status === 400) {
-            return res.json();
-          } else {
-            throw new Error("Algo salió mal en el servidor API");
-          }
-        }
-    )
-    .then(
-        data=>{
-            console.log(data)
-            productos()
-        }
-    )
-    .catch((error) => { console.log("Promesa rechazada por" , error)})
 }
